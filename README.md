@@ -18,6 +18,7 @@ given above class and default grails generate controllers + views.
 
 [This was what has been changed to make it in to a live form](https://github.com/vahidhedayati/grails-liveform-example/commit/c038b6eb3261a73b4aff9da0b67ce6db1644aeef)
 
+### [Video on this is all done](https://www.youtube.com/watch?v=Dt8FznQSnhM)
 
 Controller addition:
 

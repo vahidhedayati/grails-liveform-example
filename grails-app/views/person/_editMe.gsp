@@ -1,18 +1,19 @@
 
 			<g:javascript>
-	var baseapp="${meta(name:'app.name')}";
+	
 	
 
 	
 	// function is called by _myform.gsp 
 	function loadInteractiveFom() {
-	 	$.get("/"+baseapp+"/person/myform?template=myform",function(data){
+	 	$.get('<g:createLink controller="person"  action="myform" params="${[template:'myform']}"/>',function(data){
 			$('#interactiveForm').hide().html(data).fadeIn('slow');
 		});
 	}
 	
 	
-	
+	// this relies in name being in application.properties
+	//var baseapp="${meta(name:'app.name')}";
 	//example on how to apply variables
 	//var id="${id}";
 	//var something="${something}";

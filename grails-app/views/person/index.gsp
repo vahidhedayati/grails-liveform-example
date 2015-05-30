@@ -8,14 +8,11 @@
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<g:javascript>
-	var baseapp="${meta(name:'app.name')}";
-	
-
-	
+	<g:javascript>
+		
 	function loadPage(page) { 
-		console.log('page is'+page)
-		$.get("/"+baseapp+"/person/myform?template="+page,function(data){
+	
+		$.get('<g:createLink controller="person"  action="myform" />?template='+page,function(data){
 			$('#modifiedIndex').hide().html(data).fadeIn('slow');
 		});
 	}
