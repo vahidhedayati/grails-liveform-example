@@ -8,8 +8,35 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class PersonController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", myUpdate: "POST",  delete: "DELETE"]
+	
+	// dynamic call made via jquery inside _edit.gsp
+	def myform(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		def personInstanceList=Person.list(params)
+		println "-- $params"
+		render template: params.template, model:[personInstanceList:personInstanceList, personInstanceCount: Person.count()]
+	}
+	
+	@Transactional
+	def myUpdate(Person personInstance) {
+		println "-- ${params} @@@ $personInstance"
+		//=Person.get(params.id)
+		if (personInstance == null) {
+			render "error record found"
+			return
+		}
 
+		if (personInstance.hasErrors()) {
+			render "error record not saved"
+			return
+		}
+
+		personInstance.save flush:true
+		render "person saved"
+	}
+	
+	// BELOW ARE DEFAULTS
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Person.list(params), model:[personInstanceCount: Person.count()]

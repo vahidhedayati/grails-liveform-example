@@ -8,6 +8,19 @@
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
+		<g:javascript>
+	var baseapp="${meta(name:'app.name')}";
+	
+
+	
+	function loadPage(page) { 
+		console.log('page is'+page)
+		$.get("/"+baseapp+"/person/myform?template="+page,function(data){
+			$('#modifiedIndex').hide().html(data).fadeIn('slow');
+		});
+	}
+	</g:javascript>
+	
 		<a href="#list-person" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
@@ -20,35 +33,26 @@
 			<g:if test="${flash.message}">
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
-			<table>
-			<thead>
-					<tr>
-					
-						<g:sortableColumn property="address" title="${message(code: 'person.address.label', default: 'Address')}" />
-					
-						<g:sortableColumn property="firstName" title="${message(code: 'person.firstName.label', default: 'First Name')}" />
-					
-						<g:sortableColumn property="surName" title="${message(code: 'person.surName.label', default: 'Sur Name')}" />
-					
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${personInstanceList}" status="i" var="personInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "address")}</g:link></td>
-					
-						<td>${fieldValue(bean: personInstance, field: "firstName")}</td>
-					
-						<td>${fieldValue(bean: personInstance, field: "surName")}</td>
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
+			
+				<input type="submit" value="edit" onclick="loadPage('editMe');">
+				<input type="submit" value="list" onclick="loadPage('list');">
+			
+			<!-- actual content now moved to _list.gsp -->
+			<div id="modifiedIndex">
+			
+				<g:javascript>
+					loadPage('list');
+				</g:javascript>
+				
+			</div>
+			
+			
 			<div class="pagination">
 				<g:paginate total="${personInstanceCount ?: 0}" />
 			</div>
 		</div>
+		
+
+		
 	</body>
 </html>
